@@ -1,0 +1,28 @@
+*{
+    margin :0;
+    padding : 0;
+}
+
+.col-md-6 h2{
+    color : #555;
+}
+.price{
+    color: #FE980F;
+    font-size : 26px;
+    font-weight : bold;
+    padding-top: 20px;
+}
+
+input{
+    border : 1px solid #ccc;
+    font-weight : bold;
+    height : 33px;
+    text-align :center;
+    width : 30px;
+}
+.cart{
+    background : #FE980F;
+    color : #FFFFFF;
+
+
+}

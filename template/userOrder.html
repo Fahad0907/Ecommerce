@@ -1,0 +1,6 @@
+<p>lol</p>
+{% for i in order %}
+    {% for p in i.orderItems.all %}
+        {{p}}
+    {% endfor %}
+{% endfor %}

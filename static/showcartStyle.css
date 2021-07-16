@@ -1,0 +1,33 @@
+table img {
+    height: 50px;
+    width: 50px;
+}
+
+.amount {
+    color: blue;
+}
+
+.check {
+    margin-left: 29% ;
+    background-color: white;
+    color: blue;
+    border: 2px solid #008CBA;
+}
+
+.payment {
+    margin-left: 9px;
+}
+
+.cd {
+    margin-top: 20px;
+}
+
+.heading {
+    text-align: center;
+    margin-top: 9px;
+}
+.coupon{
+    background-color: white;
+    color: blue;
+    border: 2px solid #008CBA;
+}

@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'addProductStyle.css' %}">
+    <title>Add Product</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3"></div>
+
+            <div class="col-lg-6">
+                <h5 class="text-center">Add Product</h5>
+                <form action="{% url 'add_product' %}" method="post">
+                    {% csrf_token %}
+                    <label >Choose Category :</label>
+                    <br>
+                    <select name="cat" >
+                        <option disabled selected>--Select Category--</option>
+                        {% for i in cat %}
+                        <option name="cat" value="{{i.name}}">{{i.name}}</option>
+                        {% endfor %}
+
+
+                    </select>
+                    <br>
+                    <label for="">Product Name : </label>
+                    <br>
+                    <input name="pname" type="text" class="pname" required>
+                    <br>
+                    <label for="">Image :</label>
+                    <br>
+                    <input type="file" id="img" name="img" accept="image/*">
+                    <br>
+                    <label for="">Description: </label>
+                    <br>
+                    <textarea name="description" id="" cols="50" rows="10"></textarea >
+                    <br>
+                    <label for="">Price </label>
+                    <br>
+                    <input name="price" type="text" required>
+                    <br>
+                    <label for="">Discount </label>
+                    <br>
+                    <input name="discount" type="text" required>
+                    <br>
+                    <p>Select avilable size :</p>
+                   
+                    <input type="checkbox" id="S" name="size" value="S">
+                    <label for="s">S</label><br>
+                    <input type="checkbox" id="M" value="M" name="size">
+                    <label for="M">M</label><br>
+                   
+                    <input type="checkbox" id="L" value="L" name="size">
+                    <label for="L">L</label><br>
+                    <input type="checkbox" id="XL" value="XL" name="size">
+                    <label for="XL">XL</label><br>
+                    <label for="">Available Color :</label>
+                    <input name="color" type="text" placeholder="Red Black Blue etc">
+                    <input type="submit" value="Save">
+                    
+                    
+                    
+                </form>
+
+            </div>
+        </div>
+    </div>
+</body></html>

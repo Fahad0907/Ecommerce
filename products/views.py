@@ -6,11 +6,12 @@ app_name = 'product'
 
 # Create your views here.
 def homePage(request):
-    return render(request, "base.html", {'Category': Category.objects.all()})
+    
+    return render(request, "home.html" )
 
 
 def showProduct(request, id):
-    context = {'product': ProductDetails.objects.filter(categoryKey=id), 'Category': Category.objects.all()}
+    context = {'product': ProductDetails.objects.filter(categoryKey=id)}
     return render(request, "showProduct.html", context)
 
 

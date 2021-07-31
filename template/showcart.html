@@ -1,4 +1,8 @@
+
 {% load static %}
+{% block content %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,17 +59,23 @@
                     <div class="card-body">
                         <h6 class="card-title">Subtotal : {{order.get_total_price}}</h6>
                         <hr>
-                        <h6 class="">Payment type:</h6>
-                        <input type="radio" id="html" name="fav_language" value="Online payment" class = "payment" >
-                        <label for="html">Online payment</label><br>
-                        <input style="margin-left:9px;" type="radio" id="css" name="fav_language" value="cash on delivery">
-                        <label for="css" >Cash on delivery</label ><br>
-                        <hr>
-                        <button  class="coupon">Apply Coupon </button> <input type="text" style="width: 5rem; margin-left: 5px;">
-                        <br>
-                        <br>
-                        <hr>
-                        <button class="check" >Proced to checkout</button>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            <h6 class="">Payment type:</h6>
+                            <input type="radio" id="html" name="onlinePayment" value="Online payment" class = "payment" >
+                            <label for="html">Online payment</label><br>
+                            <input style="margin-left:9px;" type="radio" id="css" name="cashOnDelivery" value="cash on delivery">
+                            <label for="css" >Cash on delivery</label ><br>
+                            <hr>
+                            <input type="text" name = "couponCode" style="width: 5rem; margin-left: 5px;"> <button  class="coupon" name = "coupon">Apply Coupon </button> 
+                            <br>
+                            <hr>
+                            <h6 class="card-title">Total : {{addCoupon}}</h6>
+                            <br>
+                            <hr>
+                            <button class="check" name = "checkout" >Proced to checkout</button>
+                        </form>
                     </div>
                 </div>
 
@@ -75,3 +85,4 @@
 </body>
 
 </html>
+{% endblock content %} 

@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'addProductStyle.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <h3 class="text-center t">Add Coupon</h3>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <label for="fname">Coupon Code:</label>
+                    <br>
+                    
+                    <input  type="text" id="fname" name="fname" required><br><br>
+                    {% for i in messages %}
+                        <p style="color: red;">{{i}}</p>
+                    {% endfor %}
+                    <br>
+                    <label for="fname">Discount:</label>
+                    <br>
+                    <input  type="text" id="fname" name="discount" required><br><br>
+                    <label for="fname">Start Time :</label>
+                    <br>
+                    <input type="datetime-local" id="birthdaytime" name="startTime" required>
+                    <br><br>
+                    <label for="fname">End Time :</label>
+                    <br>
+                    <input type="datetime-local" id="birthdaytime" name="endTime" required>
+                    <br>
+                    <br>
+                    <input type="checkbox" id="S" name="active" value="True">
+                    <label for="s">Active</label><br>
+                 <input type="submit" value="Add Coupon">
+                 </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

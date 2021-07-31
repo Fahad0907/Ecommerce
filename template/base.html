@@ -1,11 +1,14 @@
+{% load static %}
+{% load Category %}
 <!doctype html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -18,6 +21,13 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'productDetailsStyle.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'adminOptionsStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'addProductStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'showcartStyle.css' %}">
+    
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -38,22 +48,32 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
+                        Product
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        {% for p in Category%}
+                        {% for p in request.user|category %}
                         <a class="dropdown-item" href="{% url 'showProduct' p.id%}">{{p.name}}</a>
 
                         {% endfor %}
                     </div>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="account/login/">Login</a>
+                    {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                    {% endif %}
                 </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:userProfile' %}">My profile</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <div class="btn-group">
 
-                        <a class="nav-link" href="#">Cart</a>
+                        <a class="nav-link" href="{% url 'showcart' %}">Cart</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -65,8 +85,78 @@
     </div>
 
 </nav>
-<div class="container">
+<div>
+{% block content %}
 
+{% endblock content %} 
 </div>
+
+
+<div class="container-fluid mt-5">
+        <div class="row bg-dark">
+            <div class="col-lg-4 col-md-12 cpl-sm-12 float-lg-left float-md-left mt-5">
+               <div>
+                   <h5 class = "font-weight-bold text-secondary">Company</h5>
+               </div>
+                <div>
+                    <a class="text-secondary" href="">Contuct us</a>
+                </div>
+                <div>
+                    <a class="text-secondary" href="">Press Release</a>
+                </div>
+                <div>
+                    <a class="text-secondary" href="">Investor Relation</a>
+                </div>
+                <div>
+                    <a class="text-secondary" href="">Carrer Opportunities</a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-12 cpl-sm-12 float-lg-left float-md-left mt-5">
+               <div>
+                   <h5 class = "font-weight-bold text-secondary">Online Resources</h5>
+               </div>
+                <div>
+                    <a class="text-secondary" href="">News</a>
+                </div>
+                <div>
+                    <a class="text-secondary" href="">Offres</a>
+                </div>
+                <div>
+                    <a class="text-secondary" href="">Terms &amp; Conditions</a>
+                </div>
+                <div>
+                    <a class="text-secondary" href="">Pricacy  Policy</a>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-12 cpl-sm-12 float-lg-left float-md-left mt-5 mb-3">
+               <div>
+                   <h5 class = "font-weight-bold text-secondary">Contuct us</h5>
+               </div>
+                <div>
+                    <p class="text-secondary">66 Progoti Shoroni, Baridhara</p>
+                </div>
+                <div>
+                    <p class="text-secondary" >Dhaka-1212 , BanglaDesh</p>
+                </div>
+                <div>
+                    <p class="text-secondary" >Tel: +8801627174307</p>
+                </div>
+                <div>
+                    <p class="text-secondary">Email: info&#64;furniturebd.com </p>
+                </div>
+                <div>
+                    <p class="text-secondary">Hours : Sat - Friday</p>
+                </div>
+                <div>
+                    <p class="text-secondary">9.00 am - 8.00 pm</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+
 </body>
 </html>

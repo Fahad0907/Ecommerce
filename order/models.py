@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from products.models import ProductDetails
+from Coupon.models import Coupon
 
 app_name = 'order'
 
@@ -29,13 +30,23 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     orderItems = models.ManyToManyField(Cart)
     ordered = models.BooleanField(default=False)
+    delivered = models.BooleanField(default=False)
     crated = models.DateTimeField(auto_now_add=True)
+    paymentType = models.CharField(max_length=150, blank=True, null=True)
     paymentId = models.CharField(max_length=150, blank=True, null=True)
     orderId = models.CharField(max_length=150, blank=True, null=True)
-
+    couponCode = models.CharField(max_length=50, blank=True, null=True)
+    discount = models.CharField(max_length=50, blank=True, null=True)
+    amount = models.CharField(max_length=500, blank=True, null=True)
     def get_total_price(self):
         total = 0
         for i in self.orderItems.all():
             total = total + float(i.get_total())
         return total
+
+    
+    
+    
+            
+                
 

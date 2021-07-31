@@ -1,8 +1,4 @@
-
 {% load static %}
-{% block content %}
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,24 +15,22 @@
             <div class="col-lg-3"></div>
 
             <div class="col-lg-6">
-                <h5 class="text-center">Select Category for updating product</h5>
-                <form action="{% url 'adminsite:show_product' %}" method="post">
+                <h5 class="text-center">Select Coupon</h5>
+                <form  method="post">
                     {% csrf_token %}
                     <label >Choose Category :</label>
                     <br>
-                    <select name="cat" >
+                    <select name="coupon" >
                         <option disabled selected>--Select Category--</option>
-                        {% for i in cat %}
-                        <option name="cat" value="{{i.name}}">{{i.name}}</option>
+                        {% for i in query %}
+                        <option name="coupon" value="{{i.code}}">{{i.code}}</option>
                         {% endfor %}
                     </select>
                     <br>
-                    <input type="submit" value="Save" name="category">
+                    <input type="submit" value="Select" name="category">
                 </form>
             </div>
         </div>
     </div>
     </body>
 </html>
-
-{% endblock content %} 

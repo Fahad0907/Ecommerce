@@ -1,6 +1,13 @@
+from account.models import Profile
+from django.http.response import HttpResponse
+from order.models import Order
 from django.shortcuts import render, redirect
 from products.models import ProductDetails, Category, VariationColor, VariationSize
 from django.contrib import messages
+from Coupon.models import Coupon
+from django.contrib import messages
+from django.shortcuts import get_list_or_404, get_object_or_404
+
 
 app_name = 'adminsite'
 
@@ -141,3 +148,91 @@ def update_product(request, id):
         elif 'delete' in request.POST:
             obj.delete()
             return redirect('adminsite:get_category')
+
+
+def add_coupon(request):
+    if request.method == 'GET':
+        return render(request, 'Coupon.html')
+    elif request.method == 'POST':
+        code = request.POST['fname']
+        start_time = request.POST['startTime']
+        end_time = request.POST['endTime']
+        discount = request.POST['discount']
+        active = request.POST.getlist('active')
+        activeStatus = False
+        if active:
+            activeStatus = True
+        check_code = Coupon.objects.filter(code=code)
+        if check_code.exists():
+            messages.warning(request,'Coupon already exists')
+            return redirect('adminsite:addCoupon')
+        else:
+            Coupon.objects.create(code=code, startTime= start_time,endTime = end_time,discount=discount ,active=activeStatus)
+            return redirect('adminsite:adminOptions')
+
+def admin_options(request):
+    return render(request, 'adminOptions.html')
+
+
+def get_coupon(request):
+    if request.method == 'POST':
+        print(request.POST.get('coupon'))
+        getCup = Coupon.objects.get(code=request.POST.get('coupon'))
+        context = {
+            'coupon' : getCup
+        }
+        return render(request, 'updateCoupon.html', context)
+
+    elif request.method == 'GET':
+        query = Coupon.objects.all()
+        context = {
+            'query' : query
+        }
+        return render(request, 'getCoupon.html', context)
+
+def show_all_order(request):
+    
+    order_query = Order.objects.all().order_by('delivered')
+    
+    if order_query.exists():
+        if request.method == 'GET':
+            context = {
+                'order_query' : order_query
+            }
+        if request.method == 'POST':
+            hold_order = request.POST['searchOrder']
+            print(hold_order)
+            get_order = Order.objects.filter(orderId = hold_order)
+            if get_order.exists():
+                context = {
+                    'order_query' : get_order
+                }
+            else:
+                context={}
+                messages.info(request, 'Invalid order id')
+            
+
+        return render(request, 'allOrder.html', context)
+    else:
+        order_query = Order.objects.all().order_by('crated')
+        context = {
+                    'order_query' : order_query
+        }
+        return render(request, 'allOrder.html', context)
+
+
+def order_details(request, id):
+    if request.method == 'POST':
+        hold_order = get_object_or_404(Order, id = id)
+        hold_order.delivered = True
+        hold_order.save()
+        return redirect('adminsite:allOrder')
+    hold_order = get_object_or_404(Order, id = id)
+    user_info = get_object_or_404(Profile, user_id = hold_order.user)
+    context = {
+        'orderInfo' : hold_order,
+        'userInfo' : user_info,
+    
+    }
+    return render(request, 'orderDetails.html', context)
+

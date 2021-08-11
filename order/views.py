@@ -5,6 +5,7 @@ from order.models import Order, Cart
 from django.utils import timezone
 from Coupon.models import Coupon
 from account.models import Profile
+from django.contrib.auth.decorators import login_required
 app_name = 'order'
 
 
@@ -44,7 +45,7 @@ def addtocart(request, id):
 
 
     
-
+@login_required(login_url='/account/login/')
 def showcart(request):
     #print(request.user.id)
     cart = Cart.objects.filter(user=request.user, purchased=False)
@@ -100,7 +101,7 @@ def showcart(request):
     else:
         return HttpResponse('No product in your cart')  
 
-
+@login_required(login_url='/account/login/')
 def update_add_single_element(request, id):
     order = Order.objects.filter(user=request.user, ordered=False)
     if order.exists():
@@ -112,7 +113,7 @@ def update_add_single_element(request, id):
         order.orderItems.add(check_cart)
         return redirect('showcart')
 
-
+@login_required(login_url='/account/login/')
 def update_delete_single_element(request, id):
     order = Order.objects.filter(user=request.user, ordered=False)
     if order.exists():
@@ -130,7 +131,7 @@ def update_delete_single_element(request, id):
             order.orderItems.add(check_cart)
             return redirect('showcart')
 
-
+@login_required(login_url='/account/login/')
 def delete_from_cart(request, id):
     order = Order.objects.filter(user=request.user, ordered=False)
     if order.exists():

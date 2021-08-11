@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import ProductDetails, Category, ProductImages, VariationSize, VariationColor
+from django.contrib.auth.decorators import login_required
 
 app_name = 'product'
 

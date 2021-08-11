@@ -7,13 +7,15 @@ from django.contrib import messages
 from Coupon.models import Coupon
 from django.contrib import messages
 from django.shortcuts import get_list_or_404, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+
 
 
 app_name = 'adminsite'
 
 
 # Create your views here.
-
+@user_passes_test(lambda u: u.is_superuser)
 def add_product(request):
     cat = Category.objects.all()
     context = {'cat': cat}
@@ -48,6 +50,7 @@ def add_product(request):
         return render(request, 'addProduct.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def get_category(request):
     if request.method == "GET":
         context = {
@@ -55,7 +58,7 @@ def get_category(request):
         }
         return render(request, 'getCategory.html', context)
 
-
+@user_passes_test(lambda u: u.is_superuser)
 def show_product(request):
     if request.method == "POST":
         get_cat = Category.objects.get(name=request.POST.get('cat'))
@@ -68,6 +71,7 @@ def show_product(request):
         return render(request, 'showProductForUpdate.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def update_product(request, id):
     obj = ProductDetails.objects.get(id=id)
     if request.method == "GET":
@@ -150,6 +154,7 @@ def update_product(request, id):
             return redirect('adminsite:get_category')
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def add_coupon(request):
     if request.method == 'GET':
         return render(request, 'Coupon.html')
@@ -170,10 +175,12 @@ def add_coupon(request):
             Coupon.objects.create(code=code, startTime= start_time,endTime = end_time,discount=discount ,active=activeStatus)
             return redirect('adminsite:adminOptions')
 
+@user_passes_test(lambda u: u.is_superuser)
 def admin_options(request):
     return render(request, 'adminOptions.html')
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def get_coupon(request):
     if request.method == 'POST':
         print(request.POST.get('coupon'))
@@ -190,6 +197,7 @@ def get_coupon(request):
         }
         return render(request, 'getCoupon.html', context)
 
+@user_passes_test(lambda u: u.is_superuser)
 def show_all_order(request):
     
     order_query = Order.objects.all().order_by('delivered')
@@ -221,6 +229,7 @@ def show_all_order(request):
         return render(request, 'allOrder.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def order_details(request, id):
     if request.method == 'POST':
         hold_order = get_object_or_404(Order, id = id)
